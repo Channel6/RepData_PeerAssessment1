@@ -3,16 +3,19 @@
 ##			     March 4, 2017		    	  ##
 ####################################################################
 
+## STEP 0: init environment
 #clean the working environment
 rm(list=ls(all=TRUE)) 
 
+
+## STEP 1: init data for reading
 # Get required files
-datafile <- "activity_monitoring.zip"
+datafile <- "activity.zip"
 if(!file.exists(datafile)){
 	url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 	download.file(
 		url,
-		destfile = "activity_monitoring.zip",
+		destfile = datafile,
 		method = "wget",
 		quiet = TRUE
 	)
@@ -22,9 +25,9 @@ if(!file.exists(datafile)){
 }
 
 
+activity<-read.csv("activity.csv", header = TRUE)
 
-activity<-read.csv("activity.csv")
-tail(activity)
-head(activity)
+
+## STEP 2: Histogram, mean, and median
 
 
