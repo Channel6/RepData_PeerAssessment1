@@ -44,4 +44,22 @@ mediansteps <- median(totalSteps$steps)
 
 ## STEP 3: Compute the average daily activity pattern.
 
+# Make a time series plot of the five minute interval along the x-axis and the average number of steps taken, averaged across all days along the y-axis.
+stepsInterval <- aggregate(
+	steps ~ interval,
+	data = activity,
+	mean,
+	na.rm = TRUE
+)
+plot(
+	steps ~ interval,
+	data = stepsInterval,
+	type = "l"
+)
+
+# Which 5-minute interval, average across all days in the dataset, contains the maximum number of steps?
+
+maxsteps <- stepsInterval[which.max(stepsInterval$steps),]$interval
+
+
 
