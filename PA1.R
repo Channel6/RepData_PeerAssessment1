@@ -26,8 +26,22 @@ if(!file.exists(datafile)){
 
 
 activity<-read.csv("activity.csv", header = TRUE)
-
+totalSteps <- aggregate(
+	steps ~ date,
+	data = activity,
+	sum,
+	na.rm = TRUE
+)
 
 ## STEP 2: Histogram, mean, and median
+
+# Make a histogram of the total number of steps taken daily.
+hist(totalSteps$steps)
+
+#get the mean and median of these steps
+meansteps <- mean(totalSteps$steps)
+mediansteps <- median(totalSteps$steps)
+
+## STEP 3: Compute the average daily activity pattern.
 
 

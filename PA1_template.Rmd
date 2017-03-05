@@ -42,11 +42,32 @@ Next, read this data into a dataframe:
 
 ```{r echo=TRUE}
 activity<-read.csv("activity.csv", header=TRUE)
+totalSteps <- aggregate(
+	steps ~ date,
+	data = activity,
+	sum,
+	na.rm = TRUE
+)
 ```
+
+Aggregate relevant data in *totalSteps*.
 
 ## What is mean total number of steps taken per day?
 
+Make a histogram of the total number of steps taken daily.
 
+```{r echo=TRUE}
+hist(totalSteps$steps)
+```
+
+Compute and report the mean and median of total steps taken daily.
+```{r echo=TRUE}
+meansteps <- mean(totalSteps$steps)
+mediansteps <- median(totalSteps$steps)
+```
+
+**Mean** total number of steps: `r meansteps`
+**Median** total number of steps: `r mediansteps`
 
 ## What is the average daily activity pattern?
 
