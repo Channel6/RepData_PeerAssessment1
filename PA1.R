@@ -77,7 +77,7 @@ completeactivity<-activity
 numfilledvals=0
 for(i in 1:nrow(completeactivity)){
     if(is.na(completeactivity[i,]$steps)){
-        completeactivity[i,]$steps<-interval2steps(completeactivity[i,]$interval)
+        completeactivity[i,]$steps<-meanstepsforinterval(completeactivity[i,]$interval)
         numfilledvals=numfilledvals+1
     }
 }

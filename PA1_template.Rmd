@@ -156,7 +156,8 @@ completeactivity$week <- ifelse(
 completeactivity$day <- factor(
 	completeactivity$day,
 	levels=c(
-		"weekday", "weekend"
+		"weekday",
+		"weekend"
 	)
 )
 ```
