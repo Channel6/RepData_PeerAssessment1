@@ -144,3 +144,22 @@ median(stepsdaily$steps)
 The mean value is the same as the value before imputing missing data because we put the mean value for that particular 5-min interval. The median value shows a little difference : but it depends on where the missing values are.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+> Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+```{r echo=TRUE}
+completeactivity$week <- ifelse(
+	weekdays(completeactivity$date) == "Saturday" | weekdays(completeactivity$date) == "Sunday",
+	"weekend",
+	"weekday"
+)
+# add factors for sorting
+completeactivity$day <- factor(
+	completeactivity$day,
+	levels=c(
+		"weekday", "weekend"
+	)
+)
+```
+
+> Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+

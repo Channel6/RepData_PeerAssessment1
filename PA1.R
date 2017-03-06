@@ -90,4 +90,36 @@ hist(stepsdaily$steps)
 mean(stepsdaily$steps)
 median(stepsdaily$steps)
 
+## STEP 5: Differences in activity patterns between weekdays and weekends?
+
+# sort by weekend/weekday
+completeactivity$week <- ifelse(
+	weekdays(completeactivity$date) == "Saturday" | weekdays(completeactivity$date) == "Sunday",
+	"weekend",
+	"weekday"
+)
+# add factors for sorting
+completeactivity$day <- factor(
+	completeactivity$day,
+	levels=c(
+		"weekday",
+		"weekend"
+	)
+)
+
+# Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+
+stepsivalweek <- aggregate(
+	steps ~ interval + day,
+	completeactivity,
+	mean
+)
+library(lattice)
+xyplot(
+	steps ~ interval | factor(day),
+	data = stepsInterval2,
+	aspect = 1/2,
+	type = "l"
+)
+
 
