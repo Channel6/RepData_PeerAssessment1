@@ -61,5 +61,33 @@ plot(
 
 maxsteps <- stepsInterval[which.max(stepsInterval$steps),]$interval
 
+## STEP 4: Imputing missing values
+
+# Calculate and report the total number of missing values in the dataset.
+missingsteps <- sum(is.na(activity$steps))
+
+# Devise a strategy for filling in all of the missing values in the dataset
+
+meanstepsforinterval<-function(ival){
+    stepsInterval[stepsInterval$ival==ival,]$steps
+}
+
+# Create a new dataset that is equal to the original dataset but with the missing data filled in.
+completeactivity<-activity
+numfilledvals=0
+for(i in 1:nrow(completeactivity)){
+    if(is.na(completeactivity[i,]$steps)){
+        completeactivity[i,]$steps<-interval2steps(completeactivity[i,]$interval)
+        numfilledvals=numfilledvals+1
+    }
+}
+cat("Total ",numfilledvals, "NA values were filled.\n\r")
+
+# Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.
+
+stepsdaily<-aggregate(steps~date,data=activityFilled,sum)
+hist(stepsdaily$steps)
+mean(stepsdaily$steps)
+median(stepsdaily$steps)
 
 
