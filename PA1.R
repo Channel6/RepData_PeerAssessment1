@@ -122,4 +122,3 @@ xyplot(
 	type = "l"
 )
 
-
