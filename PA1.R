@@ -16,7 +16,7 @@ if(!file.exists(datafile)){
 	download.file(
 		url,
 		destfile = datafile,
-		method = "wget",
+		method = "curl",
 		quiet = TRUE
 	)
 	unzip(
@@ -24,8 +24,15 @@ if(!file.exists(datafile)){
 	)
 }
 
-
-activity<-read.csv("activity.csv", header = TRUE)
+if(!file.exists("activity.csv")){
+  unzip(
+    zipfile = datafile
+  )
+}
+activity<-read.csv(
+  "activity.csv",
+  header = TRUE
+)
 totalSteps <- aggregate(
 	steps ~ date,
 	data = activity,
@@ -36,7 +43,13 @@ totalSteps <- aggregate(
 ## STEP 2: Histogram, mean, and median
 
 # Make a histogram of the total number of steps taken daily.
-hist(totalSteps$steps)
+hist(
+  totalSteps$steps,
+  main = "Steps per day",
+  xlab = "Steps",
+  col = "green",
+  breaks = 8
+)
 
 #get the mean and median of these steps
 meansteps <- mean(totalSteps$steps)
