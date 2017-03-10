@@ -23,7 +23,7 @@ if(!file.exists(datafile)){
 		quiet = TRUE
 	)
 	unzip(
-		zipfile = datafile,
+		zipfile = datafile
 	)
 }
 ```
@@ -118,61 +118,74 @@ This interval lands on interval `r maxsteps` .
 > Calculate and report the total number of missing values in the dataset:
 
 ```{r echo=TRUE}
-missingsteps <- sum(is.na(activity$steps))
+missingsteps <- NROW(activity[is.na(activity$steps),])
 ```
 
 Number of missing steps: `r missingsteps`
 
 > Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
-My strategy: Fill in the missing values with the mean for that 5-minute interval. Firstly, create function "meanstepsforinterval" to get the mean steps for a given 5-minute interval.
-
-```{r echo=TRUE}
-meanstepsforinterval<-function(ival){
-    stepsInterval[stepsInterval$ival==ival,]$steps
-}
-```
+My strategy is to take any N/A values and make them zero (0).
+This may be problematic for the mean. This will lower our mean (keeping the same total number of rows from the original set and deflating the total sum by replacing unknown values with 0.
+This may shift our mean to the left, given the presence of lower values (0).
 
 > Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
+This is already accomplished with the above set. I cloned out the original to preserve data.
+
 ```{r echo=TRUE}
 completeactivity<-activity
-numfilledvals=0
-for(i in 1:nrow(completeactivity)){
-    if(is.na(completeactivity[i,]$steps)){
-        completeactivity[i,]$steps<-interval2steps(completeactivity[i,]$interval)
-        numfilledvals=numfilledvals+1
-    }
-}
-cat("Total ",numfilledvals, "NA values were filled.\n\r")
+completeactivity[is.na(completeactivity$steps), "steps"] <- 0
+
 ```
 
 > Make a histogram of the total number of steps taken each day and Calculate and report the **mean** and **median** total number of steps taken per day.
 ```{r echo=TRUE}
-stepsdaily<-aggregate(steps~date,data=activityFilled,sum)
-hist(stepsdaily$steps)
-mean(stepsdaily$steps)
-median(stepsdaily$steps)
+dailysteps<-aggregate(
+  steps ~ date,
+  data = completeactivity,
+  sum
+)
+hist(
+  dailysteps$steps,
+  main = "Steps per day",
+  xlab = "Steps",
+  col = "green",
+  breaks = 8
+) 
 ```
 
 * The **mean** total number of steps taken per day: `r mean(stepsdaily$steps)`.
 * The **median** total number of steps taken per day: `r median(stepsdaily$steps)`.
 * Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
-The mean value is the same as the value before imputing missing data because we put the mean value for that particular 5-min interval. The median value shows a little difference : but it depends on where the missing values are.
+The mean and median are affected due to the imputing method discussed above. My hypotehsis stated prior is correct.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
 > Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+
 ```{r echo=TRUE}
-completeactivity$week <- ifelse(
-	weekdays(completeactivity$date) == "Saturday" | weekdays(completeactivity$date) == "Sunday",
-	"weekend",
-	"weekday"
+weekdaynames = c(
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday"
 )
+completeactivity$week <- factor(
+  (
+    weekdays(
+      as.Date(completeactivity$date)
+    ) %in% weekdaynames
+  ),
+  levels = c("TRUE", "FALSE"),
+  labels = c("weekend", "weekday")
+)
+
 # add factors for sorting
-completeactivity$day <- factor(
-	completeactivity$day,
+completeactivity$week <- factor(
+	completeactivity$week,
 	levels=c(
 		"weekday",
 		"weekend"
@@ -182,3 +195,18 @@ completeactivity$day <- factor(
 
 > Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
+stepsivalweek <- aggregate(
+	steps ~ interval + week,
+	completeactivity,
+	mean
+)
+library(lattice)
+xyplot(
+	steps ~ interval | factor(week),
+	data = stepsivalweek,
+	col = "orange",
+	aspect = 1/2,
+	ylab = "Steps",
+	xlab = "Interval",
+	type = "l"
+)
