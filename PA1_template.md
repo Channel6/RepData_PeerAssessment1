@@ -2,6 +2,7 @@
 
 
 ## Loading and preprocessing the data
+
 First, clean the working environment:
 
 ```r
@@ -178,7 +179,7 @@ The mean and median are affected due to the imputing method discussed above. My 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-> Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+> Create a new factor variable in the dataset with two levels â€“ â€œweekdayâ€ and â€œweekendâ€ indicating whether a given date is a weekday or weekend day.
 
 
 ```r
