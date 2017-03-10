@@ -1,6 +1,6 @@
-####		Replicating Data -- Peer Assessment 1		####
-##			     Glenn Kerbein			  ##
-##			     March 4, 2017		    	  ##
+####	       	Replicating Data -- Peer Assessment 1	          	####
+##			                   Glenn Kerbein			                    ##
+##              			     March 4, 2017		    	                ##
 ####################################################################
 
 ## STEP 0: init environment
@@ -20,7 +20,7 @@ if(!file.exists(datafile)){
 		quiet = TRUE
 	)
 	unzip(
-		zipfile = datafile,
+		zipfile = datafile
 	)
 }
 
