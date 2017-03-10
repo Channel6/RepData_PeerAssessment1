@@ -151,8 +151,11 @@ stepsivalweek <- aggregate(
 library(lattice)
 xyplot(
 	steps ~ interval | factor(week),
-	data = stepsInterval2,
+	data = stepsivalweek,
+	col = "orange",
 	aspect = 1/2,
+	ylab = "Steps",
+	xlab = "Interval",
 	type = "l"
 )
 
