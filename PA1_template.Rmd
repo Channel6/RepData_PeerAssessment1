@@ -153,8 +153,8 @@ hist(
   col = "green",
   breaks = 8
 ) 
-meanstepsdaily = mean(stepsdaily$steps)
-medianstepsdaily = mean(stepsdaily$steps)
+meanstepsdaily = mean(dailysteps$steps)
+medianstepsdaily = mean(dailysteps$steps)
 ```
 
 * The **mean** total number of steps taken per day: `r meanstepsdaily`.

@@ -109,8 +109,8 @@ hist(
   col = "green",
   breaks = 8
 ) 
-mean(dailysteps$steps)
-median(dailysteps$steps)
+meanstepsdaily = mean(dailysteps$steps)
+medianstepsdaily = mean(dailysteps$steps)
 
 ## STEP 5: Differences in activity patterns between weekdays and weekends?
 
