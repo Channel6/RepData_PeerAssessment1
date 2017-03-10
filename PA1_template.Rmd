@@ -153,10 +153,12 @@ hist(
   col = "green",
   breaks = 8
 ) 
+meanstepsdaily = mean(stepsdaily$steps)
+medianstepsdaily = mean(stepsdaily$steps)
 ```
 
-* The **mean** total number of steps taken per day: `r mean(stepsdaily$steps)`.
-* The **median** total number of steps taken per day: `r median(stepsdaily$steps)`.
+* The **mean** total number of steps taken per day: `r meanstepsdaily`.
+* The **median** total number of steps taken per day: `r medianstepsdaily`.
 * Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 The mean and median are affected due to the imputing method discussed above. My hypotehsis stated prior is correct.
